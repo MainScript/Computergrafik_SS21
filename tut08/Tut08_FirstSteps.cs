@@ -52,14 +52,12 @@ namespace FuseeApp
             RC.Clear(ClearFlags.Color | ClearFlags.Depth);
 
             for (var i = 0; i < cubes.Length; i++){
-                var size = cubes[i].size;
-
                 float4 rgb = HSLtoRGB(Time.TimeSinceStart * 180 + i * 360/arrsize, 1f, 0.5f);
                 cubes[i].changeColor(rgb);
 
                 cubes[i].rotate((45f * M.Pi/180f) * Time.DeltaTime);
-                cubes[i].setTranslate((float) Math.Cos(2 * Time.TimeSinceStart) * size * 3);
-                cubes[i].setScale(Math.Abs(cubes[i].trans.Translation.x) / (size * 3));
+                cubes[i].setTranslate((float) Math.Cos(2 * Time.TimeSinceStart) * cubes[i].size * 3);
+                cubes[i].setScale(Math.Abs(cubes[i].trans.Translation.x) / (cubes[i].size * 3));
             }
             
             RC.View = float4x4.CreateTranslation(0, 0, 50) * float4x4.CreateRotationY(_camAngle);
