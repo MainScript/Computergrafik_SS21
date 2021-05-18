@@ -24,13 +24,11 @@ namespace FuseeApp
         private Cube[] cubes;
 
         private int arrsize = 5;
-
         private Random rnd = new Random();
 
-        // Init is called on startup. 
         public override void Init()
         {
-            // Set the clear color for the backbuffer to white (100% intensity in all color channels R, G, B, A).
+            
             RC.ClearColor = (float4) ColorUint.DarkGreen;
             _scene = new SceneContainer();
 
@@ -45,44 +43,35 @@ namespace FuseeApp
                 _scene.Children.Add(cubes[i].node);
                 prevy = (int) newcube.trans.Translation.y;
             }
-
-            // Create a scene renderer holding the scene above
             _sceneRenderer = new SceneRendererForward(_scene);
         }
 
-        // RenderAFrame is called once a frame
         public override void RenderAFrame()
         {
             SetProjectionAndViewport();
-
-            // Clear the backbuffer
             RC.Clear(ClearFlags.Color | ClearFlags.Depth);
 
             for (var i = 0; i < cubes.Length; i++){
+                var size = cubes[i].size;
+
                 float4 rgb = HSLtoRGB(Time.TimeSinceStart * 180 + i * 360/arrsize, 1f, 0.5f);
                 cubes[i].changeColor(rgb);
+
                 cubes[i].rotate((45f * M.Pi/180f) * Time.DeltaTime);
-                var size = cubes[i].size;
                 cubes[i].setTranslate((float) Math.Cos(2 * Time.TimeSinceStart) * size * 3);
                 cubes[i].setScale(Math.Abs(cubes[i].trans.Translation.x) / (size * 3));
             }
             
-
-            /*_camAngle = _camAngle + 15.0f * M.Pi/180.0f * DeltaTime;*/
             RC.View = float4x4.CreateTranslation(0, 0, 50) * float4x4.CreateRotationY(_camAngle);
 
             _sceneRenderer.Render(RC);
-
-            // Swap buffers: Show the contents of the backbuffer (containing the currently rendered frame) on the front buffer.
             Present();
         }
 
         public void SetProjectionAndViewport()
         {
             RC.Viewport(0, 0, Width, Height);
-
             var aspectRatio = Width / (float)Height;
-
             var projection = float4x4.CreatePerspectiveFieldOfView(M.PiOver4, aspectRatio, 1, 20000);
             RC.Projection = projection;
         }        
