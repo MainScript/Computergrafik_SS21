@@ -1,0 +1,9 @@
+C:\Users\mcmai\Documents\computergrafik\tut09\bin\Debug\Tut09_HierarchyAndInput.deps.json
+C:\Users\mcmai\Documents\computergrafik\tut09\bin\Debug\Tut09_HierarchyAndInput.dll
+C:\Users\mcmai\Documents\computergrafik\tut09\bin\Debug\Tut09_HierarchyAndInput.pdb
+C:\Users\mcmai\Documents\computergrafik\tut09\obj\Debug\Tut09_HierarchyAndInput.csprojAssemblyReference.cache
+C:\Users\mcmai\Documents\computergrafik\tut09\obj\Debug\Tut09_HierarchyAndInput.AssemblyInfoInputs.cache
+C:\Users\mcmai\Documents\computergrafik\tut09\obj\Debug\Tut09_HierarchyAndInput.AssemblyInfo.cs
+C:\Users\mcmai\Documents\computergrafik\tut09\obj\Debug\Tut09_HierarchyAndInput.csproj.CoreCompileInputs.cache
+C:\Users\mcmai\Documents\computergrafik\tut09\obj\Debug\Tut09_HierarchyAndInput.dll
+C:\Users\mcmai\Documents\computergrafik\tut09\obj\Debug\Tut09_HierarchyAndInput.pdb
