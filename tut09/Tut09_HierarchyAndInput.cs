@@ -24,6 +24,12 @@ namespace FuseeApp
         private Transform _baseTransform;
         private Transform _bodyTransform;
         private Transform _upperArmTransform;
+        private Transform _foreArmTransform;
+        private Transform _grip1Transform;
+        private Transform _grip2Transform;
+        private Boolean opening = true;
+        private float _clawAngle = 0.5f;
+        private Boolean spacePressed = false;
 
 
        SceneContainer CreateScene()
@@ -45,9 +51,30 @@ namespace FuseeApp
 
             _upperArmTransform = new Transform
             {
-                Rotation = new float3(0, 0, 0),
+                Rotation = new float3(-1f, 0, 0),
                 Scale = new float3(1, 1, 1),
-                Translation = new float3(2, 8, 0)
+                Translation = new float3(2, 4, 0)
+            };
+
+            _foreArmTransform = new Transform
+            {
+                Rotation = new float3(-1f, 0, 0),
+                Scale = new float3(1, 1, 1),
+                Translation = new float3(-2, 8, 0)
+            };
+
+            _grip1Transform = new Transform
+            {
+                Rotation = new float3(0.5f, 0, 0),
+                Scale = new float3(1, 1, 1),
+                Translation = new float3(0, 9, 1f)
+            };
+
+            _grip2Transform = new Transform
+            {
+                Rotation = new float3(-0.5f, 0, 0),
+                Scale = new float3(1, 1, 1),
+                Translation = new float3(0, 9, -1f)
             };
 
             // Setup the scene graph
@@ -79,15 +106,108 @@ namespace FuseeApp
                                 },
                                 Children = {
                                     // green
-                                new SceneNode {
-                                    Components = {
+                                new SceneNode
+                                {
+                                    Components =
+                                    {
                                         _upperArmTransform,
-                                        MakeEffect.FromDiffuseSpecular((float4) ColorUint.Green, float4.Zero),
-                                        SimpleMeshes.CreateCuboid(new float3(2, 10, 2))
+                                    },
+                                    Children = 
+                                    {
+                                        new SceneNode
+                                        {
+                                            Components = 
+                                            {
+                                                new Transform
+                                                {
+                                                    Rotation = new float3(0, 0, 0),
+                                                    Scale = new float3(1, 1, 1),
+                                                    Translation = new float3(0, 4, 0)
+                                                },
+                                                MakeEffect.FromDiffuseSpecular((float4) ColorUint.Green, float4.Zero),
+                                                SimpleMeshes.CreateCuboid(new float3(2, 10, 2))
+                                            }
+                                        },
+                                        // blue
+                                        new SceneNode
+                                        {
+                                            Components =
+                                            {
+                                                _foreArmTransform,
+                                            },
+                                            Children = 
+                                            {
+                                                new SceneNode
+                                                {
+                                                    Components = 
+                                                    {
+                                                        new Transform
+                                                        {
+                                                            Rotation = new float3(0, 0, 0),
+                                                            Scale = new float3(1, 1, 1),
+                                                            Translation = new float3(0, 4, 0)
+                                                        },
+                                                        MakeEffect.FromDiffuseSpecular((float4) ColorUint.Blue, float4.Zero),
+                                                        SimpleMeshes.CreateCuboid(new float3(2, 10, 2))
+                                                    }
+                                                },
+
+                                                new SceneNode
+                                                {
+                                                    Components =
+                                                    {
+                                                        _grip1Transform,
+                                                        
+                                                    },
+                                                    Children = {
+                                                        new SceneNode 
+                                                        {
+                                                            Components = 
+                                                            {
+                                                                new Transform
+                                                                {
+                                                                    Rotation = new float3(0, 0, 0),
+                                                                    Scale = new float3(1, 1, 1),
+                                                                    Translation = new float3(0, 1, 0)
+                                                                },
+                                                                MakeEffect.FromDiffuseSpecular((float4) ColorUint.Pink, float4.Zero),
+                                                                SimpleMeshes.CreateCuboid(new float3(2, 2, 0.5f))
+                                                            }
+                                                        }
+                                                    }
+                                                },
+
+                                                new SceneNode
+                                                {
+                                                    Components =
+                                                    {
+                                                        _grip2Transform,
+                                                        
+                                                    },
+                                                    Children = {
+                                                        new SceneNode 
+                                                        {
+                                                            Components = 
+                                                            {
+                                                                new Transform
+                                                                {
+                                                                    Rotation = new float3(0, 0, 0),
+                                                                    Scale = new float3(1, 1, 1),
+                                                                    Translation = new float3(0, 1, -0)
+                                                                },
+                                                                MakeEffect.FromDiffuseSpecular((float4) ColorUint.Pink, float4.Zero),
+                                                                SimpleMeshes.CreateCuboid(new float3(2, 2, 0.5f))
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            
+                                            }
+                                        }
                                     }
-                                
+
+                                }
                             }
-                        }
                                 
                             }
                         }
@@ -112,6 +232,36 @@ namespace FuseeApp
         // RenderAFrame is called once a frame
         public override void RenderAFrame()
         {
+            _bodyTransform.Rotation.y += 1.5f * Time.DeltaTime * Keyboard.LeftRightAxis;
+            _upperArmTransform.Rotation.x += 0.5f * Time.DeltaTime * Keyboard.UpDownAxis;
+            _foreArmTransform.Rotation.x += 0.5f * Time.DeltaTime * Keyboard.WSAxis;
+
+            _grip1Transform.Rotation.x = _clawAngle;
+            _grip2Transform.Rotation.x = -_clawAngle;
+
+            if (opening) {
+                if (_clawAngle < 0.5f) {
+                    _clawAngle += 0.5f * DeltaTime;
+                }
+            } else {
+                if (_clawAngle > -0.5f) {
+                    _clawAngle -= 0.5f * DeltaTime;
+                }
+            }
+
+            if (Mouse.LeftButton) {
+                _camAngle += Mouse.Velocity.x * -0.0005f;
+            }
+
+            if (Keyboard.GetKey(KeyCodes.Space)) {
+                if (!spacePressed) {
+                    opening = !opening;
+                }
+                spacePressed = true;
+            } else {
+                spacePressed = false;
+            }
+
             SetProjectionAndViewport();
             
             // Clear the backbuffer
