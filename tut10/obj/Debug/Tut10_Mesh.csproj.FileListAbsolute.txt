@@ -1,0 +1,9 @@
+C:\Users\mcmai\Documents\computergrafik\tut10\bin\Debug\Tut10_Mesh.deps.json
+C:\Users\mcmai\Documents\computergrafik\tut10\bin\Debug\Tut10_Mesh.dll
+C:\Users\mcmai\Documents\computergrafik\tut10\bin\Debug\Tut10_Mesh.pdb
+C:\Users\mcmai\Documents\computergrafik\tut10\obj\Debug\Tut10_Mesh.csprojAssemblyReference.cache
+C:\Users\mcmai\Documents\computergrafik\tut10\obj\Debug\Tut10_Mesh.AssemblyInfoInputs.cache
+C:\Users\mcmai\Documents\computergrafik\tut10\obj\Debug\Tut10_Mesh.AssemblyInfo.cs
+C:\Users\mcmai\Documents\computergrafik\tut10\obj\Debug\Tut10_Mesh.csproj.CoreCompileInputs.cache
+C:\Users\mcmai\Documents\computergrafik\tut10\obj\Debug\Tut10_Mesh.dll
+C:\Users\mcmai\Documents\computergrafik\tut10\obj\Debug\Tut10_Mesh.pdb
