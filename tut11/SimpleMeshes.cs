@@ -7,7 +7,6 @@ using Fusee.Engine.Core.Scene;
 using Fusee.Engine.Core.Effects;
 using Fusee.Math.Core;
 using Fusee.Serialization;
-using Fusee.Base.Core;
 
 namespace FuseeApp
 {
@@ -137,92 +136,7 @@ namespace FuseeApp
 
         public static Mesh CreateCylinder(float radius, float height, int segments)
         {
-            // Im Endergebnis sieht es so aus, als wären die Normals gedreht, aber die Rechnung müsste eigentlich stimmen
-            // Daher weiß ich nicht, wo bei mir der Fehler liegt
-            float3[] verts = new float3[segments * 4 + 2];
-            float3[] norms = new float3[segments * 4 + 2];
-            ushort[] tris  = new ushort[segments * 12];
-            float delta = 2 * M.Pi / segments;
-            
-            // Top, Mantel-Top, Mantel-Bottom, Bottom => 0,1,2,3
-            verts[0] = new float3(radius, 0.5f * height, 0);
-            verts[1] = new float3(radius, 0.5f * height, 0);
-            verts[2] = new float3(radius, -0.5f * height, 0);
-            verts[3] = new float3(radius, -0.5f * height, 0);
-
-
-            norms[0] = float3.UnitY;
-            norms[1] = float3.UnitX;
-            norms[2] = float3.UnitX;
-            norms[3] = -float3.UnitY;
-
-            // Top Mittelpunkt
-            verts[segments * 4] = new float3(0, 0.5f * height, 0);
-            // Bottom Mittelpunkt
-            verts[segments * 4 + 1] = new float3(0, -0.5f * height, 0);
-
-
-            norms[segments * 4] = float3.UnitY;
-            norms[segments * 4 + 1] = -float3.UnitY;
-
-            for (int i = 1; i < segments; i++)
-            {
-                verts[4 * i] = new float3(radius * M.Cos(i * delta), 0.5f*height, radius * M.Sin(i * delta));
-                norms[4 * i] = float3.UnitY;
-
-                verts[4 * i + 1] = new float3(radius * M.Cos(i * delta), 0.5f*height, radius * M.Sin(i * delta));
-                norms[4 * i + 1] = new float3(M.Cos(delta * i), 0, M.Sin(delta * i));
-
-                verts[4 * i + 2] = new float3(radius * M.Cos(delta * i), -0.5f*height,radius * M.Sin(delta * i));
-                norms[4 * i + 2] = new float3(M.Cos(delta * i), 0, M.Sin(delta * i));
-
-                verts[4 * i + 3] = new float3(radius * M.Cos(i * delta), -0.5f*height, radius * M.Sin(i * delta));
-                norms[4 * i + 3] = -float3.UnitY;
-
-                // Deckfläche
-                tris[12 * (i - 1) + 0] = (ushort) (4 * segments);
-                tris[12 * (i - 1) + 1] = (ushort) (4 * i + 0);
-                tris[12 * (i - 1) + 2] = (ushort) (4 * (i - 1) + 0);
-
-                // Mantelfläche
-                tris[12 * (i - 1) + 3] = (ushort) (4 * (i - 1) + 2);
-                tris[12 * (i - 1) + 4] = (ushort) (4 * i + 1);
-                tris[12 * (i - 1) + 5] = (ushort) (4 * i + 2);
-
-                tris[12 * (i - 1) + 6] = (ushort) (4 * (i - 1) + 2);
-                tris[12 * (i - 1) + 7] = (ushort) (4 * (i - 1) + 1);
-                tris[12 * (i - 1) + 8] = (ushort) (4 * i + 1);
-
-                // Bodenfläche
-                tris[12 * (i - 1) + 9 ] = (ushort) (4 * segments + 1);
-                tris[12 * (i - 1) + 10] = (ushort) (4 * (i - 1) + 3);
-                tris[12 * (i - 1) + 11] = (ushort) (4 * i + 3);
-            }
-            
-            tris[12 * segments - 12] = (ushort)(4 * segments);
-            tris[12 * segments - 11] = (ushort)(0);  
-            tris[12 * segments - 10] = (ushort)(4 * segments - 4);  
-
-            tris[12 * segments - 9 ] = (ushort)(4 * segments - 2);
-            tris[12 * segments - 8 ] = (ushort)(1);
-            tris[12 * segments - 7 ] = (ushort)(2);
-
-            tris[12 * segments - 6 ] = (ushort)(4 * segments - 2);
-            tris[12 * segments - 5 ] = (ushort)(4 * segments - 3);
-            tris[12 * segments - 4 ] = (ushort)(1);
-
-            tris[12 * segments - 3 ] = (ushort)(4 * segments + 1);
-            tris[12 * segments - 2 ] = (ushort)(4 * segments - 1);
-            tris[12 * segments - 1 ] = (ushort)(3); 
-            
-            
-
-            return new Mesh
-            {
-                Vertices = verts,
-                Normals = norms,
-                Triangles = tris,  
-            };
+            return CreateConeFrustum(radius, radius, height, segments);
         }
 
         public static Mesh CreateCone(float radius, float height, int segments)

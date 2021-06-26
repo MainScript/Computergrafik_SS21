@@ -1,0 +1,11 @@
+C:\Users\mcmai\Documents\computergrafik\tut11\bin\Debug\Assets\CubeCar.fus
+C:\Users\mcmai\Documents\computergrafik\tut11\bin\Debug\Assets\panzer.fus
+C:\Users\mcmai\Documents\computergrafik\tut11\bin\Debug\Tut11_AssetsPicking.deps.json
+C:\Users\mcmai\Documents\computergrafik\tut11\bin\Debug\Tut11_AssetsPicking.dll
+C:\Users\mcmai\Documents\computergrafik\tut11\bin\Debug\Tut11_AssetsPicking.pdb
+C:\Users\mcmai\Documents\computergrafik\tut11\obj\Debug\Tut11_AssetsPicking.csprojAssemblyReference.cache
+C:\Users\mcmai\Documents\computergrafik\tut11\obj\Debug\Tut11_AssetsPicking.AssemblyInfoInputs.cache
+C:\Users\mcmai\Documents\computergrafik\tut11\obj\Debug\Tut11_AssetsPicking.AssemblyInfo.cs
+C:\Users\mcmai\Documents\computergrafik\tut11\obj\Debug\Tut11_AssetsPicking.csproj.CoreCompileInputs.cache
+C:\Users\mcmai\Documents\computergrafik\tut11\obj\Debug\Tut11_AssetsPicking.dll
+C:\Users\mcmai\Documents\computergrafik\tut11\obj\Debug\Tut11_AssetsPicking.pdb
